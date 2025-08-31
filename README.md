@@ -1,9 +1,8 @@
-# Imitation Learning for LeRobot
+# Imitation Learning Robot Lab
 
 A comprehensive framework for imitation learning using the LeRobot library, featuring multiple robotic environments, teleoperation interfaces, and data collection pipelines.
 
 ## Table of Contents
-
 - [Overview](#overview)
 - [Features](#features)
 - [Installation](#installation)
@@ -34,53 +33,24 @@ This project implements imitation learning pipelines for robotic manipulation ta
 
 ## Installation
 
-### Prerequisites
-
-- Python 3.8+
-- Conda or Miniconda
-- FFmpeg (for video processing)
-- CUDA-compatible GPU (optional, for accelerated training)
-
-### Environment Setup
-
-1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd imitation_learning_lerobot
-   ```
-
-2. **Create and activate conda environment**
-   ```bash
-   conda create -n lerobot python=3.8
+   # Clone the repository
+   git clone https://github.com/David-Kingsman/imitation_learning_robot_lab
+   cd imitation_learning_robot_lab
+   # Create and activate conda environment
+   conda create -n lerobot python=3.10
    conda activate lerobot
-   ```
-
-3. **Install LeRobot**
-   ```bash
-   cd lerobot
-   pip install -e .
+   # Install LeRobot
+   cd lerobot & pip install -e .
    cd ..
-   ```
-
-4. **Install project dependencies**
-   ```bash
+   # Install project dependencies
    pip install -e .
-   ```
-
-5. **Install additional requirements**
-   ```bash
-   pip install opencv-python h5py numpy
-   ```
-
-6. **Verify FFmpeg installation**
-   ```bash
-   ffmpeg -version
    ```
 
 ## Project Structure
 
-```
-imitation_learning_lerobot/
+```yaml
+imitation_learning_robot_lab/
 ├── envs/                          # Environment implementations
 │   ├── dishwasher_env.py         # Dishwasher manipulation environment
 │   ├── pick_and_place_env.py     # Pick and place tasks
@@ -106,25 +76,28 @@ imitation_learning_lerobot/
 
 **Automated data collection:**
 ```bash
-conda activate lerobot
-python ./imitation_learning_lerobot/scripts/collect_data.py \
+python ./imitation_learning_robot_lab/scripts/collect_data.py \
   --env.type=dishwasher \
   --episode=100
 ```
 
 **Teleoperation data collection:**
 ```bash
-conda activate lerobot
-python ./imitation_learning_lerobot/scripts/collect_data_teleoperation.py \
-  --env.type=pick_box \
-  --handler.type=joycon
+python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py \
+  --env.type=pick_box \    
+  --handler.type=joycon     # keyboard/joycon
+```
+
+**Visualize teleoperation data collection hdf5 files:**
+```bash
+python ./imitation_learning_robot_lab/scripts/visualize_hdf5.py --dataset_dir outputs/datasets/pick_box_hdf5 --traj --video
 ```
 
 ### 2. Data Format Conversion
 
 Convert HDF5 data to LeRobot format:
 ```bash
-python ./imitation_learning_lerobot/scripts/convert_h5_to_lerobot.py \
+python ./imitation_learning_robot_lab/scripts/convert_h5_to_lerobot.py \
   --env.type=dishwasher
 ```
 
@@ -132,14 +105,14 @@ python ./imitation_learning_lerobot/scripts/convert_h5_to_lerobot.py \
 
 Train imitation learning policy:
 ```bash
-python ./imitation_learning_lerobot/scripts/train_dishwasher.py
+python ./imitation_learning_robot_lab/scripts/train_dishwasher.py
 ```
 
 ### 4. Evaluation
 
 Evaluate trained policy:
 ```bash
-python ./imitation_learning_lerobot/scripts/rollout_dishwasher.sh
+python ./imitation_learning_robot_lab/scripts/rollout_dishwasher.sh
 ```
 
 ## Data Collection
@@ -149,33 +122,68 @@ python ./imitation_learning_lerobot/scripts/rollout_dishwasher.sh
 The automated data collection script generates synthetic demonstrations using predefined policies:
 
 ```bash
-python ./imitation_learning_lerobot/scripts/collect_data.py \
-  --env.type=<environment_type> \
-  --episode=<number_of_episodes>
+python ./imitation_learning_robot_lab/scripts/collect_data.py \
+  --env.type=pick_box \
+  --episode=100
 ```
 
 **Parameters:**
-- `--env.type`: Environment type (dishwasher, pick_and_place, pick_box, bartend)
-- `--episode`: Number of episodes to collect
+- `--env.type`: Environment type 
+  - `pick_box`: Box picking and manipulation 
+  - `pick_and_place`: Pick and place tasks  
+  - `transfer_cube`: Cube transfer tasks 
+  - `dishwasher`: Dishwasher loading/unloading 
+  - `bartend`: Bartending tasks 
+- `--episode`: Number of episodes to collect (default: 100)
 
 ### Teleoperation Collection
 
 Collect human demonstrations using teleoperation interfaces:
 
 ```bash
-python ./imitation_learning_lerobot/scripts/collect_data_teleoperation.py \
-  --env.type=<environment_type> \
-  --handler.type=<interface_type>
+python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py \
+  --env.type=pick_box \
+  --handler.type=keyboard
 ```
 
 **Supported interfaces:**
-- `joycon`: Nintendo JoyCon controllers
-- `keyboard`: Keyboard input
+- `keyboard`: Keyboard input (fully supported)
+- `joycon`: Nintendo JoyCon controllers (requires pyjoycon module)
 
 **Supported environments:**
-- `pick_box`: Box picking and manipulation
-- `transfer_cube`: Cube transfer tasks
-- `dishwasher`: Dishwasher loading/unloading
+- `pick_box`: Box picking and manipulation (keyboard support)
+- `transfer_cube`: Cube transfer tasks (no keyboard support)
+- `dishwasher`: Dishwasher loading/unloading (no keyboard support)
+- `pick_and_place`: Pick and place tasks (no keyboard support)
+- `bartend`: Bartending tasks (no keyboard support)
+
+**Note**: Currently only `pick_box` environment supports keyboard control. Other environments require JoyCon controllers or custom keyboard handlers.
+
+**Keyboard Controls for pick_box:**
+- **Start Control**: Right Ctrl key
+- **Pause Control**: Right Shift key
+- **Stop Episode**: Enter key
+- **X-axis Movement**: Keypad 1 (-) / 7 (+)
+- **Y-axis Movement**: Keypad 4 (-) / 6 (+)
+- **Z-axis Movement**: Keypad 2 (-) / 8 (+)
+- **Gripper Control**: Keypad 3 (close) / 9 (open)
+
+### Quick Start Examples
+
+**Collect data with automatic policy:**
+```bash
+# Collect 50 episodes of pick_box data
+python ./imitation_learning_robot_lab/scripts/collect_data.py --env.type=pick_box --episode=50
+
+# Collect 100 episodes of pick_and_place data  
+python ./imitation_learning_robot_lab/scripts/collect_data.py --env.type=pick_and_place --episode=100
+```
+
+**Collect data with keyboard teleoperation:**
+```bash
+# Use keyboard to control pick_box robot
+python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py --env.type=pick_box --handler.type=keyboard
+```
 
 ### Data Output
 
@@ -192,13 +200,13 @@ Each environment has a dedicated training script:
 
 ```bash
 # Dishwasher environment
-python ./imitation_learning_lerobot/scripts/train_dishwasher.py
+python ./imitation_learning_robot_lab/scripts/train_dishwasher.py
 
 # Pick and place environment
-python ./imitation_learning_lerobot/scripts/train_pick_and_place.py
+python ./imitation_learning_robot_lab/scripts/train_pick_and_place.py
 
 # Pick box environment
-python ./imitation_learning_lerobot/scripts/train_pick_box.py
+python ./imitation_learning_robot_lab/scripts/train_pick_box.py
 ```
 
 ### Training Configuration
@@ -283,7 +291,7 @@ Evaluation includes:
 
 **Usage:**
 ```bash
-python ./imitation_learning_lerobot/scripts/collect_data_teleoperation.py \
+python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py \
   --env.type=pick_box \
   --handler.type=joycon
 ```
@@ -298,7 +306,7 @@ python ./imitation_learning_lerobot/scripts/collect_data_teleoperation.py \
 
 **Usage:**
 ```bash
-python ./imitation_learning_lerobot/scripts/collect_data_teleoperation.py \
+python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py \
   --env.type=pick_box \
   --handler.type=keyboard
 ```
@@ -349,7 +357,7 @@ Training-ready dataset format:
 **Solution**: Videos use H.264 encoding for compatibility. Use VLC, mpv, or other H.264-compatible players.
 
 #### 2. Module Import Errors
-**Problem**: `ModuleNotFoundError: No module named 'imitation_learning_lerobot'`
+**Problem**: `ModuleNotFoundError: No module named 'imitation_learning_robot_lab'`
 **Solution**: Ensure conda environment is activated and package is installed:
 ```bash
 conda activate lerobot
@@ -414,11 +422,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you use this code in your research, please cite:
 
 ```bibtex
-@software{imitation_learning_lerobot,
+@software{imitation_learning_robot_lab,
   title={Imitation Learning for LeRobot},
   author={Your Name},
   year={2024},
-  url={https://github.com/yourusername/imitation_learning_lerobot}
+  url={https://github.com/David-Kingsman/imitation_learning_robot_lab}
 }
 ```
 
