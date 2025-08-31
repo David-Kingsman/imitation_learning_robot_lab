@@ -1,11 +1,9 @@
-from typing import Type
+from typing import Type, Optional
 from pathlib import Path
 import argparse
 import dataclasses
 from lerobot.common.datasets.lerobot_dataset import LeRobotDataset
-
 from imitation_learning_lerobot.envs import Env, EnvFactory
-
 
 @dataclasses.dataclass(frozen=True)
 class DatasetConfig:
@@ -13,9 +11,10 @@ class DatasetConfig:
     tolerance_s: float = 0.0001
     image_writer_processes: int = 10
     image_writer_threads: int = 5
-    video_backend: str | None = None
+    # video_backend: str | None = None
+    video_backend: Optional[str] = "h264"  # use h264 encoder to improve compatibility
 
-
+# args parser
 def parse_args():
     parser = argparse.ArgumentParser()
 
@@ -33,10 +32,9 @@ def parse_args():
         default=100,
         help='episode'
     )
-
     return parser.parse_args()
 
-
+# create empty dataset
 def create_empty_dataset(env_cls: Type[Env]):
     features = {
         "observation.state": {
@@ -53,7 +51,7 @@ def create_empty_dataset(env_cls: Type[Env]):
             }
         }
     }
-
+    # add video features
     for camera in env_cls.cameras:
         features[f"observation.images.{camera}"] = {
             "dtype": "video",
@@ -64,9 +62,8 @@ def create_empty_dataset(env_cls: Type[Env]):
                 "channel"
             ]
         }
-
+    # create dataset
     config = DatasetConfig()
-
     dataset = LeRobotDataset.create(
         repo_id=env_cls.name,
         fps=env_cls.control_hz,
@@ -77,12 +74,13 @@ def create_empty_dataset(env_cls: Type[Env]):
         tolerance_s=config.tolerance_s,
         image_writer_processes=config.image_writer_processes,
         image_writer_threads=config.image_writer_threads,
-        video_backend=config.video_backend
+        # video_backend=config.video_backend
+        video_backend="h264"  # use h264 encoder to improve compatibility
     )
 
     return dataset
 
-
+# populate dataset
 def populate_dataset(episode: int, env_cls: Type[Env], dataset: LeRobotDataset):
     env = env_cls()
     task = env.name
@@ -105,7 +103,7 @@ def populate_dataset(episode: int, env_cls: Type[Env], dataset: LeRobotDataset):
 
     env.close()
 
-
+# main
 def main():
     args = parse_args()
 

@@ -1,0 +1,25 @@
+name: lerobot
+channels:
+  - conda-forge
+  - pytorch
+  - nvidia
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy=1.26.4
+  - scipy
+  - matplotlib
+  - h5py
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pytorch-cuda=12.1
+  - mujoco
+  - spatialmath-python
+  - pip
+  - pip:
+    - loop-rate-limiters
+    - modern-robotics
+    - roboticstoolbox-python
+    - placo
+    - lerobot

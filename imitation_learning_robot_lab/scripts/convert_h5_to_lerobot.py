@@ -5,9 +5,7 @@ import h5py
 import numpy as np
 import dataclasses
 from lerobot.common.datasets.lerobot_dataset import LeRobotDataset
-
 from imitation_learning_lerobot.envs import Env, EnvFactory
-
 
 @dataclasses.dataclass(frozen=True)
 class DatasetConfig:
@@ -17,7 +15,7 @@ class DatasetConfig:
     image_writer_threads: int = 5
     video_backend: str | None = None
 
-
+# args parser
 def parse_args():
     parser = argparse.ArgumentParser()
 
@@ -31,7 +29,7 @@ def parse_args():
 
     return parser.parse_args()
 
-
+# create empty dataset
 def create_empty_dataset(env_cls: Type[Env]):
     features = {
         "observation.state": {
@@ -48,7 +46,7 @@ def create_empty_dataset(env_cls: Type[Env]):
             }
         }
     }
-
+    # add video features
     for camera in env_cls.cameras:
         features[f"observation.images.{camera}"] = {
             "dtype": "video",
@@ -77,7 +75,7 @@ def create_empty_dataset(env_cls: Type[Env]):
 
     return dataset
 
-
+# populate dataset
 def populate_dataset(env_cls: Type[Env], dataset: LeRobotDataset):
     task = env_cls.name
 
