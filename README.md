@@ -14,8 +14,6 @@ A comprehensive framework for imitation learning using the LeRobot library, feat
 - [Supported Environments](#supported-environments)
 - [Teleoperation Interfaces](#teleoperation-interfaces)
 - [Data Formats](#data-formats)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Overview
@@ -70,9 +68,7 @@ imitation_learning_robot_lab/
 └── outputs/                      # Generated datasets and checkpoints
 ```
 
-## Quick Start
-
-### 1. Data Collection
+## Data Collection
 
 **Automated data collection:**
 ```bash
@@ -93,7 +89,7 @@ python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py \
 python ./imitation_learning_robot_lab/scripts/visualize_hdf5.py --dataset_dir outputs/datasets/pick_box_hdf5 --traj --video
 ```
 
-### 2. Data Format Conversion
+## Data Format Conversion
 
 Convert HDF5 data to LeRobot format:
 ```bash
@@ -101,19 +97,20 @@ python ./imitation_learning_robot_lab/scripts/convert_h5_to_lerobot.py \
   --env.type=dishwasher
 ```
 
-### 3. Training
+## Training
 
 Train imitation learning policy:
 ```bash
-python ./imitation_learning_robot_lab/scripts/train_dishwasher.py
+python ./scripts/train_dishwasher.py
 ```
 
 ### 4. Evaluation
 
 Evaluate trained policy:
 ```bash
-python ./imitation_learning_robot_lab/scripts/rollout_dishwasher.sh
+python ./scripts/rollout_dishwasher.sh
 ```
+
 
 ## Data Collection
 
@@ -348,103 +345,15 @@ Training-ready dataset format:
 └── dataset_info.json       # Dataset configuration
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-#### 1. Video Output is Black
-**Problem**: Generated videos appear black in some players
-**Solution**: Videos use H.264 encoding for compatibility. Use VLC, mpv, or other H.264-compatible players.
-
-#### 2. Module Import Errors
-**Problem**: `ModuleNotFoundError: No module named 'imitation_learning_robot_lab'`
-**Solution**: Ensure conda environment is activated and package is installed:
-```bash
-conda activate lerobot
-pip install -e .
-```
-
-#### 3. NumPy Compatibility Issues
-**Problem**: NumPy version conflicts
-**Solution**: Use compatible NumPy version:
-```bash
-pip install "numpy<2"
-```
-
-#### 4. FFmpeg Not Found
-**Problem**: Video encoding fails
-**Solution**: Install FFmpeg:
-```bash
-# Ubuntu/Debian
-sudo apt update && sudo apt install ffmpeg
-
-# macOS
-brew install ffmpeg
-```
-
-### Performance Optimization
-
-- **GPU acceleration**: Enable CUDA for faster training
-- **Data loading**: Use SSD storage for large datasets
-- **Memory management**: Adjust batch sizes based on available RAM
-- **Video encoding**: Use H.264 codec for compatibility and speed
-
-## Contributing
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch
-3. Install development dependencies
-4. Make changes and add tests
-5. Submit a pull request
-
-### Code Style
-
-- Follow PEP 8 guidelines
-- Use type hints for function parameters
-- Add docstrings for all public functions
-- Include unit tests for new features
-
-### Testing
-
-Run tests before submitting changes:
-```bash
-python -m pytest tests/
-```
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Citation
 
-If you use this code in your research, please cite:
 
-```bibtex
-@software{imitation_learning_robot_lab,
-  title={Imitation Learning for LeRobot},
-  author={Your Name},
-  year={2024},
-  url={https://github.com/David-Kingsman/imitation_learning_robot_lab}
-}
-```
 
 ## Acknowledgments
 
-- LeRobot team for the underlying framework
-- MuJoCo for physics simulation
-- OpenCV for computer vision utilities
-- PyTorch for deep learning infrastructure
 
-## Support
 
-For questions and support:
-- Create an issue on GitHub
-- Check the documentation
-- Review troubleshooting section
-- Contact the maintainers
-
----
-
-**Note**: This project is actively maintained. Please check for updates and report any issues you encounter.
