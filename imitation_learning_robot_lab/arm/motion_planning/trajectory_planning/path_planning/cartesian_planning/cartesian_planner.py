@@ -1,6 +1,6 @@
 from spatialmath import SE3
 
-from imitation_learning_lerobot.arm.interface import ModeEnum
+from imitation_learning_robot_lab.arm.interface import ModeEnum
 
 from ..path_planner_strategy import PathPlannerStrategy
 

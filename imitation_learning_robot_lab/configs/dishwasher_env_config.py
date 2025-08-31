@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 
-from lerobot.common.constants import ACTION, OBS_ENV_STATE, OBS_IMAGE, OBS_IMAGES, OBS_STATE
-from lerobot.common.envs import EnvConfig
+from lerobot.constants import ACTION, OBS_ENV_STATE, OBS_IMAGE, OBS_IMAGES, OBS_STATE
+from lerobot.envs import EnvConfig
 from lerobot.configs.types import FeatureType, PolicyFeature
 
 

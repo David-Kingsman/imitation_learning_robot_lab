@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from spatialmath import SO3
 
-from imitation_learning_lerobot.arm.interface import Strategy
+from imitation_learning_robot_lab.arm.interface import Strategy
 
 from .attitude_parameter import AttitudeParameter
 

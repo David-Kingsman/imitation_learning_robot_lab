@@ -7,15 +7,15 @@ from pprint import pformat
 import re
 import torch
 
-from lerobot.common.policies.factory import make_policy
-from lerobot.common.policies.pretrained import PreTrainedPolicy
+from lerobot.policies.factory import make_policy
+from lerobot.policies.pretrained import PreTrainedPolicy
 from lerobot.configs import parser
 from lerobot.configs.eval import EvalPipelineConfig
-from lerobot.common.utils.utils import get_safe_torch_device
-from lerobot.common.envs.utils import preprocess_observation
+from lerobot.utils.utils import get_safe_torch_device
+from lerobot.envs.utils import preprocess_observation
 
-from imitation_learning_lerobot import configs
-from imitation_learning_lerobot.envs import Env, EnvFactory
+from imitation_learning_robot_lab import configs
+from imitation_learning_robot_lab.envs import Env, EnvFactory
 
 
 @parser.wrap()

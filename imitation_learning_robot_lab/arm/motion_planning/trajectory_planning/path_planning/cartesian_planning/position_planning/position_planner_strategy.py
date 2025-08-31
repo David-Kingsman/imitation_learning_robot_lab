@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 
-from imitation_learning_lerobot.arm.interface import Strategy
+from imitation_learning_robot_lab.arm.interface import Strategy
 
 from .position_parameter import PositionParameter
 

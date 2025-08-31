@@ -1,5 +1,5 @@
 from enum import unique
-from imitation_learning_lerobot.arm.interface import ModeEnum
+from imitation_learning_robot_lab.arm.interface import ModeEnum
 
 
 @unique

@@ -1,6 +1,6 @@
 import numpy as np
 
-from imitation_learning_lerobot.arm.interface import ModeEnum
+from imitation_learning_robot_lab.arm.interface import ModeEnum
 from ..velocity_planning_mode_enum import VelocityPlanningModeEnum
 from ..velocity_parameter import VelocityParameter
 from ..velocity_planner_strategy import VelocityPlannerStrategy

@@ -7,8 +7,8 @@ import numpy as np
 import h5py
 import cv2
 
-from imitation_learning_lerobot.envs import Env, EnvFactory
-from imitation_learning_lerobot.teleoperation import HandlerFactory
+from imitation_learning_robot_lab.envs import Env, EnvFactory
+from imitation_learning_robot_lab.teleoperation import HandlerFactory
 
 
 def parse_args():
@@ -32,7 +32,7 @@ def parse_args():
 
     return parser.parse_args()
 
-
+# teleoperate the robot with the teleoperator
 def teleoperate(env_cls: Type[Env], handler_type):
     handler_cls = HandlerFactory.get_strategies(env_cls.name + "_" + handler_type)
     handler = handler_cls()
@@ -42,6 +42,7 @@ def teleoperate(env_cls: Type[Env], handler_type):
     env = env_cls(render_mode="human")
     observation, info = env.reset()
 
+    # GUI window
     for camera in env_cls.cameras:
         cv2.namedWindow(camera, cv2.WINDOW_GUI_NORMAL)
 
@@ -73,6 +74,7 @@ def teleoperate(env_cls: Type[Env], handler_type):
         observation, reward, terminated, truncated, info = env.step(action)
 
         env.render()
+        # image display by opencv for each camera
         for camera in env.cameras:
             cv2.imshow(camera, cv2.cvtColor(observation["pixels"][camera], cv2.COLOR_RGB2BGR))
         cv2.waitKey(1)

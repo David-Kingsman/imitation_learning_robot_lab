@@ -1,7 +1,7 @@
 import time
 
 from pyjoycon import get_R_id, GyroTrackingJoyCon
-from imitation_learning_lerobot.teleoperation.joycon.orientation_estimation.imu import Imu
+from imitation_learning_robot_lab.teleoperation.joycon.orientation_estimation.imu import Imu
 
 
 class RightJoycon(GyroTrackingJoyCon, Imu):

@@ -1,6 +1,6 @@
 from abc import ABC
 
-from imitation_learning_lerobot.arm.interface import Strategy
+from imitation_learning_robot_lab.arm.interface import Strategy
 
 from .path_parameter import PathParameter
 
