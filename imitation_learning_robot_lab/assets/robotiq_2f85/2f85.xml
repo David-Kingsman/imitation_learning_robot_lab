@@ -26,16 +26,16 @@
 
       <joint axis="1 0 0"/>
       <default class="driver">
-        <joint range="0 0.8" armature="0.01" damping="0.2" solimplimit="0.99 0.99 0.001" solreflimit="0.001 1"/>
+        <joint armature="0.02" damping="0.3" solimplimit="0.999 0.999 0.001" solreflimit="0.0001 1" />
       </default>
       <default class="follower">
-        <joint range="-0.872664 0.872664" armature="0.002" damping="0.1" solimplimit="0.99 0.99 0.001" solreflimit="0.001 1"/>
+        <joint armature="0.02" damping="0.3" solimplimit="0.999 0.999 0.001" solreflimit="0.0001 1" />
       </default>
       <default class="spring_link">
-        <joint range="-0.29670597283 0.8" armature="0.002" stiffness="0.1" springref="2.62" damping="0.01"/>
+        <joint range="-0.29670597283 0.8" armature="0.02" stiffness="0.5" springref="2.62" damping="0.3" solimplimit="0.999 0.999 0.001" solreflimit="0.0001 1" />
       </default>
       <default class="coupler">
-        <joint range="-1.57 0" armature="0.002" damping="0.1" solimplimit="0.99 0.99 0.001" solreflimit="0.001 1"/>
+        <joint armature="0.02" damping="0.3" solimplimit="0.999 0.999 0.001" solreflimit="0.0001 1" />
       </default>
 
       <default class="visual2">
