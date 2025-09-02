@@ -44,6 +44,7 @@ class PickBoxEnv(Env):
         self._latest_action = None
         self._render_cache = None
 
+
         scene_path = Path(__file__).parent.parent / Path("assets/scenes/pick_box_scene.xml")
         self._mj_model: mujoco.MjModel = mujoco.MjModel.from_xml_path(os.fspath(scene_path))
         self._mj_data: mujoco.MjData = mujoco.MjData(self._mj_model)
@@ -63,7 +64,6 @@ class PickBoxEnv(Env):
         self._obj_t = np.zeros(3)
 
     def reset(self):
-
         mujoco.mj_resetData(self._mj_model, self._mj_data)
         mujoco.mj_forward(self._mj_model, self._mj_data)
 
