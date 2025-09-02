@@ -6,5 +6,6 @@ from .dishwasher_env import DishwasherEnv
 from .bartend_env import BartendEnv
 from .pick_box_env import PickBoxEnv
 from .transfer_cube_env import TransferCubeEnv
+from .ur30_pick_box_env import UR30PickBoxEnv
 
 EnvFactory.register_all()
