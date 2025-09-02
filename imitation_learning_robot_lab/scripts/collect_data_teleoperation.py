@@ -34,7 +34,16 @@ def parse_args():
 
 # teleoperate the robot with the teleoperator
 def teleoperate(env_cls: Type[Env], handler_type):
-    handler_cls = HandlerFactory.get_strategies(env_cls.name + "_" + handler_type)
+    # search for specific handler, if not found, use general handler
+    handler_name = env_cls.name + "_" + handler_type
+    handler_cls = HandlerFactory.get_strategies(handler_name)
+    
+    if handler_cls is None:
+        # revert to general handler
+        handler_cls = HandlerFactory.get_strategies("pick_box_" + handler_type)
+        if handler_cls is None:
+            raise ValueError(f"handler not found: {handler_name} or pick_box_{handler_type}")
+    
     handler = handler_cls()
     handler.start()
     handler.print_info()
