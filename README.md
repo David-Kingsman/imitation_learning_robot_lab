@@ -79,9 +79,9 @@ python ./imitation_learning_robot_lab/scripts/collect_data.py \
 
 **Teleoperation data collection:**
 ```bash
-python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py \
-  --env.type=pick_box \    
-  --handler.type=joycon     # keyboard/joycon
+python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py --env.type=pick_box --handler.type=keyboard    # keyboard/joycon
+# ur30
+python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py --env.type=ur30_pick_box --handler.type=keyboard
 ```
 
 **Visualize teleoperation data collection hdf5 files:**
