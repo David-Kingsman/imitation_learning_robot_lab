@@ -1,59 +1,59 @@
 # Imitation Learning Robot Lab
 
-基于LeRobot库的机器人模仿学习框架，支持多种机器人环境和遥操作接口。
+A comprehensive framework for imitation learning using the LeRobot library, featuring multiple robotic environments, teleoperation interfaces, and data collection pipelines.
 
-## 功能特性
+## Features
 
-- **多机器人环境**: 洗碗机、抓取放置、抓取盒子、调酒等场景
-- **遥操作接口**: JoyCon手柄和键盘输入支持
-- **数据收集**: 自动化数据收集和视频编码
-- **训练管道**: 端到端模仿学习训练
-- **评估工具**: 策略回放和性能评估
+- **Multiple Robotic Environments**: Dishwasher, pick-and-place, pick-box, and bartending scenarios
+- **Teleoperation Interfaces**: JoyCon controllers and keyboard input support
+- **Data Collection**: Automated data collection with video encoding
+- **Training Pipeline**: End-to-end imitation learning training
+- **Evaluation Tools**: Policy rollout and performance assessment
 
-## 安装
+## Installation
 
 ```bash
-# 克隆仓库
+# Clone the repository
 git clone https://github.com/David-Kingsman/imitation_learning_robot_lab
 cd imitation_learning_robot_lab
 
-# 创建并激活conda环境
+# Create and activate conda environment
 conda create -n lerobot python=3.10
 conda activate lerobot
 
-# 安装LeRobot
+# Install LeRobot
 cd lerobot && pip install -e .
 cd ..
 
-# 安装项目依赖
+# Install project dependencies
 pip install -e .
 ```
 
-## 快速开始
+## Quick Start
 
-### 数据收集
+### Data Collection
 
-**自动数据收集:**
+**Automated data collection:**
 ```bash
 python ./imitation_learning_robot_lab/scripts/collect_data.py \
   --env.type=dishwasher \
   --episode=100
 ```
 
-**遥操作数据收集:**
+**Teleoperation data collection:**
 ```bash
 python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py \
   --env.type=pick_box \
   --handler.type=keyboard
 ```
 
-### 训练
+### Training
 
 ```bash
 python ./scripts/train_dishwasher.py
 ```
 
-### 评估
+### Evaluation
 
 ```bash
 python ./scripts/rollout_dishwasher.sh
