@@ -1,112 +1,60 @@
 # Imitation Learning Robot Lab
 
-A comprehensive framework for imitation learning using the LeRobot library, featuring multiple robotic environments, teleoperation interfaces, and data collection pipelines.
+基于LeRobot库的机器人模仿学习框架，支持多种机器人环境和遥操作接口。
 
-## Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Installation](#installation)
-- [Project Structure](#project-structure)
-- [Quick Start](#quick-start)
-- [Data Collection](#data-collection)
-- [Training](#training)
-- [Evaluation](#evaluation)
-- [Supported Environments](#supported-environments)
-- [Teleoperation Interfaces](#teleoperation-interfaces)
-- [Data Formats](#data-formats)
-- [License](#license)
+## 功能特性
 
-## Overview
+- **多机器人环境**: 洗碗机、抓取放置、抓取盒子、调酒等场景
+- **遥操作接口**: JoyCon手柄和键盘输入支持
+- **数据收集**: 自动化数据收集和视频编码
+- **训练管道**: 端到端模仿学习训练
+- **评估工具**: 策略回放和性能评估
 
-This project implements imitation learning pipelines for robotic manipulation tasks using the LeRobot framework. It provides a complete workflow from data collection through teleoperation to policy training and evaluation.
+## 安装
 
-## Features
+```bash
+# 克隆仓库
+git clone https://github.com/David-Kingsman/imitation_learning_robot_lab
+cd imitation_learning_robot_lab
 
-- **Multiple Robotic Environments**: Dishwasher, pick-and-place, pick-box, and bartending scenarios
-- **Teleoperation Interfaces**: JoyCon controllers and keyboard input support
-- **Data Collection**: Automated data collection with video encoding
-- **Training Pipeline**: End-to-end imitation learning training
-- **Evaluation Tools**: Policy rollout and performance assessment
-- **Flexible Data Formats**: Support for both HDF5 and LeRobot dataset formats
+# 创建并激活conda环境
+conda create -n lerobot python=3.10
+conda activate lerobot
 
-## Installation
+# 安装LeRobot
+cd lerobot && pip install -e .
+cd ..
 
-   ```bash
-   # Clone the repository
-   git clone https://github.com/David-Kingsman/imitation_learning_robot_lab
-   cd imitation_learning_robot_lab
-   # Create and activate conda environment
-   conda create -n lerobot python=3.10
-   conda activate lerobot
-   # Install LeRobot
-   cd lerobot & pip install -e .
-   cd ..
-   # Install project dependencies
-   pip install -e .
-   ```
-
-## Project Structure
-
-```yaml
-imitation_learning_robot_lab/
-├── envs/                          # Environment implementations
-│   ├── dishwasher_env.py         # Dishwasher manipulation environment
-│   ├── pick_and_place_env.py     # Pick and place tasks
-│   ├── pick_box_env.py           # Box picking environment
-│   └── bartend_env.py            # Bartending tasks
-├── teleoperation/                 # Teleoperation interfaces
-│   ├── joycon/                   # JoyCon controller handlers
-│   └── keyboard/                 # Keyboard input handlers
-├── scripts/                       # Main execution scripts
-│   ├── collect_data.py           # Automated data collection
-│   ├── collect_data_teleoperation.py  # Teleoperation data collection
-│   ├── convert_h5_to_lerobot.py  # Data format conversion
-│   └── train_*.py                # Training scripts
-├── configs/                       # Environment configurations
-├── arm/                          # Robot arm models and configurations
-├── assets/                       # 3D models and scene files
-└── outputs/                      # Generated datasets and checkpoints
+# 安装项目依赖
+pip install -e .
 ```
 
-## Data Collection
+## 快速开始
 
-**Automated data collection:**
+### 数据收集
+
+**自动数据收集:**
 ```bash
 python ./imitation_learning_robot_lab/scripts/collect_data.py \
   --env.type=dishwasher \
   --episode=100
 ```
 
-**Teleoperation data collection:**
+**遥操作数据收集:**
 ```bash
-python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py --env.type=pick_box --handler.type=keyboard    # keyboard/joycon
-# ur30
-python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py --env.type=ur30_pick_box --handler.type=keyboard
+python ./imitation_learning_robot_lab/scripts/collect_data_teleoperation.py \
+  --env.type=pick_box \
+  --handler.type=keyboard
 ```
 
-**Visualize teleoperation data collection hdf5 files:**
-```bash
-python ./imitation_learning_robot_lab/scripts/visualize_hdf5.py --dataset_dir outputs/datasets/pick_box_hdf5 --traj --video
-```
+### 训练
 
-## Data Format Conversion
-
-Convert HDF5 data to LeRobot format:
-```bash
-python ./imitation_learning_robot_lab/scripts/convert_h5_to_lerobot.py \
-  --env.type=dishwasher
-```
-
-## Training
-
-Train imitation learning policy:
 ```bash
 python ./scripts/train_dishwasher.py
 ```
 
-### 4. Evaluation
+### 评估
 
-Evaluate trained policy:
 ```bash
 python ./scripts/rollout_dishwasher.sh
 ```
@@ -346,14 +294,8 @@ Training-ready dataset format:
 ```
 
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-
 
 ## Acknowledgments
-
+The repo was referenced to Lerobot, Cybaster/imitation_learning_lerobot
 
 
